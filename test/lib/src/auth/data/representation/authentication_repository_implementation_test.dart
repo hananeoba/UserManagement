@@ -5,6 +5,7 @@ import 'package:project1/core/errors/exceptions.dart';
 import 'package:project1/core/errors/failure.dart';
 import 'package:project1/src/auth/data/data_source/auth_remote_data_source.dart';
 import 'package:project1/src/auth/data/repositories/authentication_repository_implementation.dart';
+import 'package:project1/src/auth/domain/entities/user.dart';
 
 class MockAuthenticationRemoteDataSource extends Mock
     implements AuthRemoteDataSource {}
@@ -76,6 +77,16 @@ main() {
           avatar: avatar,
           name: name)).called(1); //shouold be in here
       verifyNoMoreInteractions(remoteDataSource);
+    });
+  });
+
+  group("getUsers", () {
+    test("should call remote data source .getUsers and return [list of users]",
+        () async {
+      when(() => remoteDataSource.getUsers()).thenAnswer((_) async => []);
+
+      final result = await repoImpl.getUsers();
+      expect(result, isA<Right<dynamic, List<User>>>());
     });
   });
 }
