@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:project1/core/errors/exceptions.dart';
+import 'package:project1/core/utils/constants.dart';
 import 'package:project1/src/auth/data/models/user_model.dart';
 import "package:http/http.dart" as http;
 
@@ -26,7 +28,7 @@ class AuthRemoteDataSrcImpl implements AuthRemoteDataSource {
       {required String createdAt,
       required String avatar,
       required String name}) async {
-    final response = await _client.post(Uri.parse("$kGetUsers$kCreateUser"),
+    final response = await _client.post(Uri.parse("$kBaseUrl$kCreateUser"),
         body: jsonEncode(
           {
             "createdAt": createdAt,
@@ -34,6 +36,10 @@ class AuthRemoteDataSrcImpl implements AuthRemoteDataSource {
             "name": name,
           },
         ));
+    if (response.statusCode != 200 && response.statusCode != 201) {
+      throw ApiException(
+          message: response.body, statusCode: response.statusCode);
+    }
   }
 
   @override
@@ -44,8 +50,9 @@ class AuthRemoteDataSrcImpl implements AuthRemoteDataSource {
 
   @override
   Future<List<UserModel>> getUsers() async {
-    // TODO: implement getUsers
-    throw UnimplementedError();
+    final Users = await _client.get(Uri.parse("$kBaseUrl$kCreateUser"))
+        as List<UserModel>;
+    return Users;
   }
 
   @override
