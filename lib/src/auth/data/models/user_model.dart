@@ -13,10 +13,10 @@ class UserModel extends User {
 
   const UserModel.empty()
       : this(
-            createdAt: '2024-10-14T08:07:16.661Z',
-            name: 'Cesar Konopelski',
+            createdAt: "2024-10-25T04:02:51.344Z",
+            name: 'Al Keeling',
             avatar:
-                'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/561.jpg',
+                'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/666.jpg',
             id: '1');
 
   factory UserModel.fromJson(String source) =>
