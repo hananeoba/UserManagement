@@ -35,7 +35,7 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  Future<void> getUsers(GetUsersEvent event, Emitter<AuthState> emit) async {
+  Future<void> getUsers() async {
     emit(const GettingUsers());
     final result = await _getUsers();
     result.fold(
