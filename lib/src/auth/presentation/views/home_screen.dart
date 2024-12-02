@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project1/src/auth/presentation/cubit/auth_cubit.dart';
+import 'package:project1/src/auth/presentation/widgets/add_user_dialog.dart';
+import 'package:project1/src/auth/presentation/widgets/loading_column.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,6 +12,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController avatarController = TextEditingController();
+
   void getUsers() {
     context.read<AuthCubit>().getUsers();
   }
@@ -37,28 +42,33 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (context, state) {
         return Scaffold(
           body: state is GettingUsers
-              ? Center(child: const CircularProgressIndicator())
-              : state is UsersLoaded
-                  ? ListView.builder(
-                      itemCount: state?.users.length,
-                      itemBuilder: (context, index) {
-                        final user = state.users[index];
-                        return ListTile(
-                          title: Text(user.name),
-                          subtitle: Text(user.createdAt),
-                          leading: CircleAvatar(
-                            backgroundImage: NetworkImage(user.avatar),
-                          ),
-                        );
-                      },
-                    )
-                  : const SizedBox(),
+              ? const LoadingColumn(message: "Getting users...")
+              : state is CreatingUser
+                  ? const LoadingColumn(message: "Creating User")
+                  : state is UsersLoaded
+                      ? Center(
+                          child: ListView.builder(
+                          itemCount: state.users.length,
+                          itemBuilder: (context, index) {
+                            final user = state.users[index];
+                            return ListTile(
+                              leading: Image.network(user.avatar),
+                              title: Text(user.name),
+                              subtitle: Text(user.createdAt.substring(10)),
+                            );
+                          },
+                        ))
+                      : const SizedBox.shrink(),
           floatingActionButton: FloatingActionButton.extended(
-            icon: Icon(Icons.add),
-            label: Text("add User"),
+            icon: const Icon(Icons.add),
+            label: const Text("add User"),
             onPressed: () async {
               await showDialog(
-                  context: context, builder: (context) => AddUserDialog());
+                  context: context,
+                  builder: (context) => AddUserDialog(
+                        avatarController: nameController,
+                        nameController: avatarController,
+                      ));
               context.read<AuthCubit>().createUser(
                   createdAt: DateTime.now().toString(),
                   name: "name",

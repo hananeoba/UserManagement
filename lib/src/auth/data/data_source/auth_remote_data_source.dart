@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:project1/core/errors/exceptions.dart';
 import 'package:project1/core/utils/constants.dart';
-import 'package:project1/core/utils/typedef.dart';
 import 'package:project1/src/auth/data/models/user_model.dart';
 import "package:http/http.dart" as http;
 
@@ -34,10 +33,12 @@ class AuthRemoteDataSrcImpl implements AuthRemoteDataSource {
           body: jsonEncode(
             {
               "createdAt": createdAt,
-              "avatar": avatar,
               "name": name,
             },
-          ));
+          ),
+          headers: {
+            'Content-Type': 'application/json',
+          });
       if (response.statusCode != 200 && response.statusCode != 201) {
         throw ApiException(
             message: response.body, statusCode: response.statusCode);
@@ -67,8 +68,8 @@ class AuthRemoteDataSrcImpl implements AuthRemoteDataSource {
         );
       }
 
-      final List<UserModel> users = (jsonDecode(response.body) as List)
-          .map((e) => UserModel.fromJson(e))
+      final List<UserModel> users = (jsonDecode(response.body))
+          .map((user) => UserModel.fromJson(user))
           .toList();
       return users;
     } on ApiException {

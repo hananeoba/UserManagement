@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
 class LoadingColumn extends StatelessWidget {
-  const LoadingColumn({Key? key}) : super(key: key);
+  const LoadingColumn({super.key, required this.message});
+  final String message;
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircularProgressIndicator(),
-          SizedBox(height: 10),
+          const CircularProgressIndicator(),
+          const SizedBox(height: 10),
           Text("$message..."),
         ],
       ),

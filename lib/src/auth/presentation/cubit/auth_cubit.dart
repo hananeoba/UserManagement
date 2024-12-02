@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:project1/src/auth/domain/entities/user.dart';
 import 'package:project1/src/auth/domain/usecases/create_user.dart';
 import 'package:project1/src/auth/domain/usecases/get_users.dart';
-import 'package:project1/src/auth/presentation/bloc/auth_bloc.dart';
 
 part 'auth_state.dart';
 
