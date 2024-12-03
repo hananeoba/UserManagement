@@ -67,9 +67,8 @@ class AuthRemoteDataSrcImpl implements AuthRemoteDataSource {
           statusCode: response.statusCode,
         );
       }
-
-      final List<UserModel> users = (jsonDecode(response.body))
-          .map((user) => UserModel.fromJson(user))
+      final List<UserModel> users = (jsonDecode(response.body) as List<dynamic>)
+          .map((user) => UserModel.fromMap(user))
           .toList();
       return users;
     } on ApiException {
