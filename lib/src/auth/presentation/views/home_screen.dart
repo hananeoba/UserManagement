@@ -51,10 +51,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           itemCount: state.users.length,
                           itemBuilder: (context, index) {
                             final user = state.users[index];
-                            return ListTile(
-                              leading: Image.network(user.avatar),
-                              title: Text(user.name),
-                              subtitle: Text(user.createdAt.substring(10)),
+                            return Container(
+                              margin: EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: ListTile(
+                                leading: Image.network(user.avatar),
+                                title: Text(user.name),
+                                subtitle: Text(user.createdAt.substring(10)),
+                              ),
                             );
                           },
                         ))
