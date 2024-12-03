@@ -72,7 +72,6 @@ class _HomeScreenState extends State<HomeScreen> {
               await showDialog(
                   context: context,
                   builder: (context) => AddUserDialog(
-                        avatarController: nameController,
                         nameController: avatarController,
                       ));
             },

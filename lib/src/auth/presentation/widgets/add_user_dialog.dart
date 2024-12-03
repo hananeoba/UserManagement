@@ -6,10 +6,8 @@ class AddUserDialog extends StatelessWidget {
   const AddUserDialog({
     super.key,
     required this.nameController,
-    required this.avatarController,
   });
   final TextEditingController nameController;
-  final TextEditingController avatarController;
 
   @override
   Widget build(BuildContext context) {
