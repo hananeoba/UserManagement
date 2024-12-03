@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           itemBuilder: (context, index) {
                             final user = state.users[index];
                             return Container(
-                              margin: EdgeInsets.all(5),
+                              margin: const EdgeInsets.all(5),
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.grey),
                                   borderRadius: BorderRadius.circular(5)),
@@ -75,10 +75,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         avatarController: nameController,
                         nameController: avatarController,
                       ));
-              context.read<AuthCubit>().createUser(
-                  createdAt: DateTime.now().toString(),
-                  name: "name",
-                  avatar: "avatar");
             },
           ),
         );
